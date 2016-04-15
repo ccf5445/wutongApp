@@ -1,0 +1,37 @@
+<ion-view view-title="实务" class="concrete">
+
+  <div class="bar bar-header bar-positive concrete-bar">
+    <button ng-click="openSearchModal()" class="button button-light my-search">
+      <i class="ion-ios-search"></i>&nbsp;&nbsp;搜索文章 问答 用户
+    </button>
+  </div>
+
+  <ion-content class="content">
+
+    <ion-refresher
+            pulling-text="下拉刷新"
+            on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <ion-list>
+      <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+        <div class="concrete-list-cell" ng-click="openQuestionModal(i)">
+          <div class="img">
+            <img src="img/perry.png" alt="">
+          </div>
+          <div class="text">
+            <div class="title">私募基金备案法律业务风险如何?投价多少?回报如何??</div>
+            <div class="detail">私募基金备案法律业务风险如何?投价多少?我实在编不下去了</div>
+          </div>
+        </div>
+      </div>
+    </ion-list>
+
+    <ion-infinite-scroll
+            ng-if="moreDataCanBeLoaded()"
+            icon="ion-loading-c"
+            on-infinite="loadMoreData()">
+    </ion-infinite-scroll>
+
+  </ion-content>
+</ion-view>

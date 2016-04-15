@@ -1,0 +1,74 @@
+<ion-view view-title="个人" class="homepage">
+
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-buttons side="right">
+            <button class="transfer-click" ng-click="openEditInfoModal()">
+                编辑资料
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content class="content">
+        <div class="info">
+            <div class="user">
+                <div class="avatar">
+                    <img src="img/max.png" alt="didn't found" width="60px" class="portrait">
+                </div>
+                <div class="user-info">
+                    <div class="username">一路狂奔的章鱼丸子</div>
+                    <div class="motto">原来一生的奔波只是双脚的距离,人生得意须尽欢</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="message">
+            <div class="my-question" ng-click="openMyQuestionModal()">
+                <div class="amount">
+                    34
+                </div>
+                我的问题
+            </div>
+            <div class="my-followers" ng-click="openFollowerModal()">
+                <div class="amount">
+                    1000
+                </div>
+                我的粉丝</div>
+            <div class="to-answer" ng-click="openAnswerModal()">
+                <div class="amount">
+                    20
+                </div>
+                等我回答</div>
+        </div>
+
+        <div class="my-list">
+            <div class="my-marked" ng-click="openMarkModal()">
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                我的收藏
+            </div>
+            <div class="my-watch" ng-click="openWatchModal()">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                我的关注
+            </div>
+        </div>
+
+        <div class="more">
+            <div class="response" ng-click="openFeedbackModal()">
+                <i class="fa fa-question" aria-hidden="true"></i>
+                问题反馈
+            </div>
+            <div class="setting" ng-click="openSettingModal()">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                设置
+            </div>
+            <div class="agreement" ng-click="openAgreementModal()">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                梧桐圈协议
+            </div>
+        </div>
+
+        昵称:{{userInfo[0].nickname}}
+        签字:{{userInfo[0].userSign}}
+        头像:<img src='{{userInfo[0].avatar}}' alt="">
+
+    </ion-content>
+</ion-view>

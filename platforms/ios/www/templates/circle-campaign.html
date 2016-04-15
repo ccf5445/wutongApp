@@ -1,0 +1,62 @@
+<!--圈子-动态-->
+<ion-view class="campaign">
+
+
+    <!--<ion-nav-buttons side="left">-->
+        <!--<button class="button ion-ios-search button-clear" ng-click="openSearchModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+    <!--<ion-nav-buttons side="right">-->
+        <!--<button class="button ion-ios-plus-outline button-clear" ng-click="openQuizModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+
+    <ion-content class="cell-top cell-bottom campaign-content">
+
+        <ion-refresher
+                pulling-text="下拉刷新"
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <ion-list>
+            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+                <div class="campaign-list-cell" ng-click="openQuestionModal(i)">
+                    <div class="avatar">
+                        <div class="img">
+                            <img src="img/max.png" alt="">
+                        </div>
+                        <div class="info">
+                            <span class="username">皮卡丘</span>
+                            <span class="action">提出了问题</span>
+                        </div>
+                    </div>
+                    <!--<div class="quiz-action">-->
+                        <!--子头部，需要在ion-content加入bar-subheader 在头部加上has-subheader不然顶部会被遮挡。-->
+                    <!--</div>-->
+                    <div class="answer-action">
+                        <div class="question">
+                            Ionic修改默认主题颜色
+                        </div>
+                        <div class="answer">
+                            默认为dispay:inline-block；
+                            button-block有Padding。
+                            button-full是全屏的，它父级是没有padding的；
+                            按钮是有不同尺寸的 button-small button-large
+                            button-clear它会移除边框，使得文字脱颖而出。文字的颜色会替换背景色
+                            button-outline 添加一个透明的背景颜色；
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                icon="ion-loading-c"
+                on-infinite="loadMoreData()">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

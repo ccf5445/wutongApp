@@ -1,0 +1,59 @@
+<ion-modal-view class="section-homepage-question" ng-controller="sectionHomepageQuestionCtrl">
+
+    <ion-header-bar>
+        <button class="button button-clear" ng-click="closeMyQuestionModal()">close</button>
+        <h1 class="title">我的问题</h1>
+    </ion-header-bar>
+
+    <div class="sections">
+        <div class="all-question" ng-class="{'isSelected': allQuestion}" ng-click="switchResult('allQuestion')">所有问题</div>
+        <div class="new-question" ng-class="{'isSelected': newAnswer}" ng-click="switchResult('newAnswer')">新答案</div>
+    </div>
+
+    <ion-content class="content" delegate-handle="homepageQuestion">
+        <ion-list>
+
+            <!--所有问题-->
+            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+                <div class="question-cell">
+                    <div class="img">
+                        <img src="img/perry.png" alt="">
+                    </div>
+                    <div class="text">
+                        <div class="question">
+                            多头表现乏力 金银恐将冲高回落??美联储高官威廉姆斯表示
+                        </div>
+                        <div class="answer">
+                            美联储高官莱克表示：美联储的使命完全聚焦于国内经济。
+                            并不会把国际形势放在首位，美国就业增速强劲，核心通胀企稳，预计2016年通胀率均值相当接近2%。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div ng-repeat="cell in dataArray">-->
+                <!--{{cell.describe}}-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash;新回答&ndash;&gt;-->
+            <!--<div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]" ng-if="newAnswer">-->
+                <!--<div class="question-cell">-->
+                    <!--<div class="img">-->
+                        <!--<img src="img/mike.png" alt="">-->
+                    <!--</div>-->
+                    <!--<div class="text">-->
+                        <!--<div class="question">-->
+                            <!--多头表现乏力 金银恐将冲高回落??美联储高官威廉姆斯表示-->
+                        <!--</div>-->
+                        <!--<div class="answer">-->
+                            <!--美联储高官莱克表示：美联储的使命完全聚焦于国内经济。-->
+                            <!--并不会把国际形势放在首位，美国就业增速强劲，核心通胀企稳，预计2016年通胀率均值相当接近2%。-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </ion-list>
+    </ion-content>
+
+</ion-modal-view>

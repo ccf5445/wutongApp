@@ -1,0 +1,31 @@
+<ion-modal-view ng-controller="sectionLoginCtrl" class="section-login">
+
+    <ion-header-bar>
+        <button class="button button-clear" ng-click="loginGoback()">close</button>
+        <h1 class="title">登录</h1>
+    </ion-header-bar>
+
+    <ion-content class="content">
+
+        <div class="logo">
+            <img src="img/ionic.png" alt="">
+        </div>
+
+        <div class="my-login">
+            <input type="text" placeholder="手机/邮箱" width="200px" id="username">
+            <input type="text" placeholder="密码" width="200px" id="password">
+            <div class="forget" ng-click="openFetchPsw_1Modal()">忘记密码?</div>
+            <button class="log-in" ng-click="myLogin()">登录</button>
+            <button class="sign-in" ng-click="openSignModal()">注册</button>
+
+            <div class="else-text"> 您还可以选择以下方式登录 </div>
+        </div>
+
+        <div class="three-login" >
+            <i class="wechat fa fa-wechat fa-2x" ng-click="loginWeChat()"></i>
+            <i class="QQ fa fa-qq fa-2x" ng-click="loginQQ()"></i>
+            <i class="weibo fa fa-weibo fa-2x" ng-click="loginWeibo()"></i>
+        </div>
+
+    </ion-content>
+</ion-modal-view>

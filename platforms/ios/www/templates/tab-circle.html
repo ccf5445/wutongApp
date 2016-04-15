@@ -1,0 +1,55 @@
+<ion-view class="circle">
+
+    <!--搜索框-->
+    <!--<ion-header-bar class="bar item-input-inset">-->
+        <!--<label class="item-input-wrapper search">-->
+            <!--<i class="icon ion-search placeholder-icon"></i>-->
+            <!--<input placeholder="搜索文章 问答 用户" ng-keyup="searchList($event)" type="text">-->
+        <!--</label>-->
+    <!--</ion-header-bar>-->
+
+    <!--<ion-nav-bar class="bar-stable">-->
+        <!--<ion-nav-back-button>-->
+        <!--</ion-nav-back-button>-->
+    <!--</ion-nav-bar>-->
+
+    <!--<ion-nav-buttons side="left">-->
+        <!--<button class="button ion-ios-search button-clear" ng-click="openSearchModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+    <!--<ion-nav-buttons side="right">-->
+        <!--<button class="button ion-ios-plus-outline button-clear" ng-click="openQuizModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+    <div class="bar bar-header bar-positive circle-bar">
+        <button ng-click="openSearchModal()" class="button button-light my-search">
+            <i class="ion-ios-search"></i>&nbsp;&nbsp;搜索文章 问答 用户
+        </button>
+        <button class="button icon ion-ios-plus-outline button-clear" ng-click="openQuizModal()"></button>
+    </div>
+
+    <!--二级导航栏-->
+    <ion-tabs class="tabs-striped tabs-top second-tabs">
+
+        <ion-tab title="推荐" ui-sref="tab.circle.commend">
+            <ion-nav-view name="circle-commend"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="动态" ui-sref="tab.circle.campaign">
+            <ion-nav-view name="circle-campaign"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="最新" ui-sref="tab.circle.new">
+            <ion-nav-view name="circle-new"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="关注" ui-sref="tab.circle.regard">
+            <ion-nav-view name="circle-regard"></ion-nav-view>
+        </ion-tab>
+
+    </ion-tabs>
+
+</ion-view>
+

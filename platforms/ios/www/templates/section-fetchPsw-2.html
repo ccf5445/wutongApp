@@ -1,0 +1,18 @@
+<ion-modal-view ng-controller="sectionFetchCtrl" class="section-fetch-2">
+
+    <ion-header-bar>
+        <button class="button button-clear" ng-click="closeFetchPsw_2Modal()">back</button>
+        <h1 class="title">验证</h1>
+    </ion-header-bar>
+
+    <ion-content class="content">
+        <div class="info">
+            <div class="mention">获取验证码</div>
+            <input type="text" placeholder="请输入验证码">
+            <button class="re-fetch" ng-click="reFetch()" id="reFetchButton">
+                {{buttonText_fetch}}
+            </button>
+            <button class="next" ng-click="nextStep_2()">下一步</button>
+        </div>
+    </ion-content>
+</ion-modal-view>

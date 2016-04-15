@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "981744586B5A0FC997B5BB1E8EE5B3C2EFCF38A3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "727A4580B101F7DFE48D202455D5D5CE2F928BBD" : 0,
+    "981744586B5A0FC997B5BB1E8EE5B3C2EFCF38A3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E01F39E1-1FDA-44B3-8E4C-B598F7C9B32F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "727A4580B101F7DFE48D202455D5D5CE2F928BBD" : "wutong\/platforms\/ios\/www\/lib\/wangEditor\/",
+    "981744586B5A0FC997B5BB1E8EE5B3C2EFCF38A3" : "wutong\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HelloCordova",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "platforms\/ios\/HelloCordova.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/wangfupeng1988\/wangEditor.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "727A4580B101F7DFE48D202455D5D5CE2F928BBD"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:zixiao_luo\/wutong.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "981744586B5A0FC997B5BB1E8EE5B3C2EFCF38A3"
+    }
+  ]
+}

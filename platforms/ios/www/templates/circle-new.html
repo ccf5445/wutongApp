@@ -1,0 +1,65 @@
+<!--圈子-最新-->
+<ion-view class="new">
+
+
+    <!--<ion-nav-buttons side="left">-->
+        <!--<button class="button ion-ios-search button-clear" ng-click="openSearchModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+    <!--<ion-nav-buttons side="right">-->
+        <!--<button class="button ion-ios-plus-outline button-clear" ng-click="openQuizModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+
+    <ion-content class="cell-top cell-bottom new-content">
+
+        <ion-refresher
+                pulling-text="下拉刷新"
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <ion-list>
+            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+                <div class="new-list-cell" ng-click="openQuestionModal(i)">
+                   <div class="avatar">
+                       <img src="img/max.png" alt="">
+                   </div>
+                    <div class="answer-num">
+                        <i class="fa fa-comment-o" aria-hidden="true"></i>
+                        10
+                    </div>
+                    <div class="question">
+                        以及之后专门写了篇文章“SVG图标颜色文字般继承与填充”讲CSS中使用SVG的fill属性实现一些效果。
+                    </div>
+                    <div class="best-answer">
+                        <div class="user-info">
+                            <span class="username">丘比龙</span>
+                            <span class="motto"> - 少壮不努力老大徒伤悲</span>
+                            <div class="avatar">
+                                <img src="img/adam.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="answer-text">
+                            比方说，之前介绍“SVG Sprites技术”时候提到的fill属性，
+                            以及之后专门写了篇文章“SVG图标颜色文字般继承与填充”讲CSS中使用SVG的fill属性实现一些效果。
+                            还有很经典的在CSS中使用
+                        </div>
+                    </div>
+                    <div class="time">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                        1小时前
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                icon="ion-loading-c"
+                on-infinite="loadMoreData()">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

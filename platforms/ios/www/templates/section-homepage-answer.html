@@ -1,0 +1,31 @@
+<ion-modal-view class="section-homepage-answer" ng-controller="sectionHomepageAnswerCtrl">
+
+    <ion-header-bar>
+        <button class="button button-clear" ng-click="closeAnswerModal()">close</button>
+        <h1 class="title">等我回答</h1>
+    </ion-header-bar>
+
+    <ion-content class="content">
+
+        <ion-list ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+
+            <div class="answer-cell">
+                <div class="img">
+                    <img src="img/perry.png" alt="">
+                </div>
+                <div class="text">
+                    <div class="question">
+                        多头表现乏力 金银恐将冲高回落??美联储高官威廉姆斯表示
+                    </div>
+                    <div class="answer">
+                        美联储高官莱克表示：美联储的使命完全聚焦于国内经济。
+                        并不会把国际形势放在首位，美国就业增速强劲，核心通胀企稳，预计2016年通胀率均值相当接近2%。
+                    </div>
+                </div>
+            </div>
+
+        </ion-list>
+
+    </ion-content>
+
+</ion-modal-view>

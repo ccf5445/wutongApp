@@ -1,0 +1,76 @@
+<!--圈子-推荐-->
+<ion-view class="commend">
+
+    <!--<ion-nav-buttons side="left">-->
+        <!--<button class="button ion-ios-search button-clear" ng-click="openSearchModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+    <!--<ion-nav-buttons side="right">-->
+        <!--<button class="button ion-ios-plus-outline button-clear" ng-click="openQuizModal()">-->
+        <!--</button>-->
+    <!--</ion-nav-buttons>-->
+
+    <div class="img-slider">
+        <slick dots="true">
+            <div><div class="image slider-img"><img data-lazy="img/img-1.jpg"/></div></div>
+            <div><div class="image slider-img"><img data-lazy="img/img-2.jpg"/></div></div>
+            <div><div class="image slider-img"><img data-lazy="img/img-3.jpg"/></div></div>
+        </slick>
+    </div>
+
+    <ion-content class="comment-top cell-bottom">
+        <!--下拉刷新-->
+        <ion-refresher
+                pulling-text="下拉刷新"
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <!--列表-->
+        <ion-list>
+
+            <div class="hot">
+                <div class="img">
+                    <span class="tag">热门</span>
+                    <img src="img/ben.png" alt="">
+                </div>
+                <div class="text">
+                    <div class="title">投资的船可不能翻 跟基金寻找确定性机会</div>
+                    <div class="content">A股市场情绪升温，近期唱多浓厚，各公私募也有加仓。只是目前市场震荡，仍存在通货膨胀等不确定因素，因此，想要投资不翻船，可参考基金观点。</div>
+                </div>
+            </div>
+
+            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+                <div class="commend-list-cell" ng-click="openQuestionModal(i)">
+                    <div class="tags">
+                        <span>A股票</span>
+                        <span>入市</span>
+                    </div>
+                    <div class="text">
+                        <div class="title">
+                            投资的船可不能翻 跟基金寻找确定性机会,只是目前市场震荡
+                        </div>
+                        <div class="user">
+                            <span class="name">皮卡丘</span>
+                            <span class="motto"> — 原来一生的奔波只是双脚的距离</span>
+                            <div class="avatar">
+                                <img src="img/perry.png" alt="">
+                            </div>
+                        </div>
+                        <div class="answer">
+                            A股市场情绪升温，近期唱多浓厚，各公私募也有加仓。只是目前市场震荡，仍存在通货膨胀等不确定因素，因此，想要投资不翻船，可参考基金观点。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+
+        <!--上拉加载更多-->
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                icon="ion-loading-c"
+                on-infinite="loadMoreData()">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>
