@@ -420,6 +420,13 @@ html, body {
     font-size: 12px; }
     .homepage .content .message .my-question, .homepage .content .message .my-followers {
       border-right: solid 1px rgba(204, 204, 204, 0.5); }
+    .homepage .content .message .to-answer .new-mark {
+      position: absolute;
+      margin-left: 65px;
+      width: 5px;
+      height: 5px;
+      border-radius: 5px;
+      background-color: #cf3f0d; }
     .homepage .content .message > div {
       display: inline-block;
       width: 30%; }
@@ -430,6 +437,10 @@ html, body {
     font-size: 14px; }
     .homepage .content .my-list > div {
       padding: 10px 15px; }
+      .homepage .content .my-list > div .amount {
+        position: absolute;
+        right: 10px;
+        margin-top: -20px; }
       .homepage .content .my-list > div > i {
         font-size: 16px;
         margin-right: 5px; }
@@ -453,7 +464,7 @@ html, body {
   margin: 0 auto; }
 .section-search .selection {
   background-color: #fff;
-  margin-top: 60px;
+  margin-top: 40px;
   padding: 8px 8px 0 8px; }
   .section-search .selection > div {
     display: inline-block;
@@ -991,7 +1002,7 @@ html, body {
   background-color: #f1f1f1; }
   .section-homepage-question .sections {
     background-color: #fff;
-    margin-top: 60px;
+    margin-top: 40px;
     padding: 8px 8px 0 8px; }
     .section-homepage-question .sections > div {
       display: inline-block;

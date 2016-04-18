@@ -14,44 +14,21 @@
         <ion-list>
 
             <!--所有问题-->
-            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+            <div ng-repeat="data in dataArray">
                 <div class="question-cell">
                     <div class="img">
-                        <img src="img/perry.png" alt="">
+                        <img src="{{avatar}}" alt="img/ionic.png">
                     </div>
                     <div class="text">
                         <div class="question">
-                            多头表现乏力 金银恐将冲高回落??美联储高官威廉姆斯表示
+                            {{data.question}}
                         </div>
                         <div class="answer">
-                            美联储高官莱克表示：美联储的使命完全聚焦于国内经济。
-                            并不会把国际形势放在首位，美国就业增速强劲，核心通胀企稳，预计2016年通胀率均值相当接近2%。
+                            {{data.describe}}
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!--<div ng-repeat="cell in dataArray">-->
-                <!--{{cell.describe}}-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash;新回答&ndash;&gt;-->
-            <!--<div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]" ng-if="newAnswer">-->
-                <!--<div class="question-cell">-->
-                    <!--<div class="img">-->
-                        <!--<img src="img/mike.png" alt="">-->
-                    <!--</div>-->
-                    <!--<div class="text">-->
-                        <!--<div class="question">-->
-                            <!--多头表现乏力 金银恐将冲高回落??美联储高官威廉姆斯表示-->
-                        <!--</div>-->
-                        <!--<div class="answer">-->
-                            <!--美联储高官莱克表示：美联储的使命完全聚焦于国内经济。-->
-                            <!--并不会把国际形势放在首位，美国就业增速强劲，核心通胀企稳，预计2016年通胀率均值相当接近2%。-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
 
         </ion-list>
     </ion-content>

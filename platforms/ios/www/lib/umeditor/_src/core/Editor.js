@@ -261,8 +261,8 @@
                 }
 
                 container.style.width = /%$/.test(options.initialFrameWidth) ?  '100%' : options.initialFrameWidth -
-                    getStyleValue("padding-left")-
-                    getStyleValue("padding-right")  +'px';
+                getStyleValue("padding-left")-
+                getStyleValue("padding-right")  +'px';
 
                 var height = /%$/.test(options.initialFrameHeight) ?  '100%' : (options.initialFrameHeight - getStyleValue("padding-top")- getStyleValue("padding-bottom") );
                 if(this.options.autoHeightEnabled){
@@ -324,30 +324,31 @@
             if (options.initialContent) {
                 if (options.autoClearinitialContent) {
                     var oldExecCommand = me.execCommand;
-                    me.execCommand = function () {
-                        me.fireEvent('firstBeforeExecCommand');
-                        return oldExecCommand.apply(me, arguments);
-                    };
-                    this._setDefaultContent(options.initialContent);
-                } else
+                    // me.execCommand = function () {
+                    //     me.fireEvent('firstBeforeExecCommand');
+                    //     return oldExecCommand.apply(me, arguments);
+                    // };
+                    //this._setDefaultContent(options.initialContent);
+                }
+                else
                     this.setContent(options.initialContent, false, true);
             }
 
             //编辑器不能为空内容
 
             if (domUtils.isEmptyNode(me.body)) {
-                me.body.innerHTML = '<p>' + (browser.ie ? '' : '<br/>') + '</p>';
+                //me.body.innerHTML = '<p>' + (browser.ie ? '' : '<br/>') + '</p>';
             }
             //如果要求focus, 就把光标定位到内容开始
             if (options.focus) {
-                setTimeout(function () {
-                    me.focus(me.options.focusInEnd);
-                    //如果自动清除开着，就不需要做selectionchange;
-                    !me.options.autoClearinitialContent && me._selectionChange();
-                }, 0);
+                // setTimeout(function () {
+                //     me.focus(me.options.focusInEnd);
+                //     //如果自动清除开着，就不需要做selectionchange;
+                //     !me.options.autoClearinitialContent && me._selectionChange();
+                // }, 0);
             }
             if (!me.container) {
-                me.container = cont.parentNode;
+                // me.container = cont.parentNode;
             }
 
             me._bindshortcutKeys();
@@ -446,11 +447,11 @@
                         var key = ti[0], param = ti[1];
                         if (/^(ctrl)(\+shift)?\+(\d+)$/.test(key.toLowerCase()) || /^(\d+)$/.test(key)) {
                             if (( (RegExp.$1 == 'ctrl' ? (e.ctrlKey || e.metaKey) : 0)
-                                && (RegExp.$2 != "" ? e[RegExp.$2.slice(1) + "Key"] : 1)
-                                && keyCode == RegExp.$3
+                                    && (RegExp.$2 != "" ? e[RegExp.$2.slice(1) + "Key"] : 1)
+                                    && keyCode == RegExp.$3
                                 ) ||
                                 keyCode == RegExp.$1
-                                ) {
+                            ) {
                                 if (me.queryCommandState(i,param) != -1)
                                     me.execCommand(i, param);
                                 domUtils.preventDefault(e);
@@ -573,7 +574,7 @@
                 if (!child || child.nodeType == 1 &&
                     (dtd.$cdata[child.tagName] || isCdataDiv(child) ||
                         domUtils.isCustomeNode(child)
-                        )
+                    )
                     && child === this.body.lastChild) {
                     this.body.innerHTML = '<p>' + (browser.ie ? '&nbsp;' : '<br/>') + '</p>' + this.body.innerHTML;
 

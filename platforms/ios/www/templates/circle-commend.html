@@ -1,5 +1,5 @@
 <!--圈子-推荐-->
-<ion-view class="commend">
+<ion-view class="commend" ng-controller="circleCommendCtrl">
 
     <!--<ion-nav-buttons side="left">-->
         <!--<button class="button ion-ios-search button-clear" ng-click="openSearchModal()">-->
@@ -28,6 +28,10 @@
 
         <!--列表-->
         <ion-list>
+
+            <div class="no-data" ng-if="noData">
+                没有数据哟~
+            </div>
 
             <div class="hot">
                 <div class="img">

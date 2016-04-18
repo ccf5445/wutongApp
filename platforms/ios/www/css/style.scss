@@ -570,6 +570,16 @@ $border-gary: rgba(204, 204, 204, 0.5);
       .my-question, .my-followers {
         border-right: solid 1px $border-gary;
       }
+      .to-answer {
+        .new-mark {
+          position: absolute;
+          margin-left: 65px;
+          width: 5px;
+          height: 5px;
+          border-radius: 5px;
+          background-color: #cf3f0d;
+        }
+      }
       >div {
         display: inline-block;
         width: 30%;
@@ -583,6 +593,11 @@ $border-gary: rgba(204, 204, 204, 0.5);
       font-size: 14px;
       >div {
         padding: 10px 15px;
+        .amount {
+          position: absolute;
+          right: 10px;
+          margin-top: -20px;
+        }
         >i {
           font-size: 16px;
           margin-right: 5px;
@@ -620,7 +635,10 @@ $border-gary: rgba(204, 204, 204, 0.5);
   }
   .selection {
     background-color: $white;
-    margin-top: 60px;
+    ////真机
+    //margin-top: 60px;
+    //chrome
+    margin-top: 40px;
     padding: 8px 8px 0 8px;
     >div {
       display: inline-block;
@@ -1322,7 +1340,10 @@ $border-gary: rgba(204, 204, 204, 0.5);
   background-color: $circle-background;
   .sections {
     background-color: $white;
-    margin-top: 60px;
+    ////真机
+    //margin-top: 60px;
+    //chrome
+    margin-top: 40px;
     padding: 8px 8px 0 8px;
     >div {
       display: inline-block;

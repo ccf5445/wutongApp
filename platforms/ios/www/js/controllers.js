@@ -292,6 +292,21 @@ angular.module('starter.controllers', [])
         $scope.sectionWatch.hide();
     };
 
+    //* * * * * * * * * 个人主页 —— 我的回答
+    $ionicModal.fromTemplateUrl('templates/section-homepage-myAnswer.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.sectionMyAnswer = modal;
+    });
+    $scope.openMyAnswerModal = function() {
+        $scope.sectionMyAnswer.show();
+    };
+
+    $scope.closeMyAnswerModal = function() {
+        $scope.sectionMyAnswer.hide();
+    };
+
     //* * * * * * * * * 个人主页 —— 编辑我的资料
     $ionicModal.fromTemplateUrl('templates/section-homepage-EditInfo.html', {
         scope: $scope,
@@ -327,81 +342,263 @@ angular.module('starter.controllers', [])
 //我的控制器
 .controller('homepageCtrl', function($scope, userInfoService) {
     console.log('个人主页控制器');
+
+    //登录成功之后返回赋值
+    $scope.$on('userRefreshed',function(){
+        $scope.userInfo = [{
+            account: userInfoService.userInfo[0].account,
+            nickname: userInfoService.userInfo[0].nickname,
+            avatar: userInfoService.userInfo[0].avatar,
+            motto: userInfoService.userInfo[0].motto,
+            markedNum: userInfoService.userInfo[0].markedNum,
+            myAnswerNum: userInfoService.userInfo[0].myAnswerNum,
+            waitForAnswerNum: userInfoService.userInfo[0].waitForAnswerNum,
+            myFollowerNum: userInfoService.userInfo[0].myFollowerNum,
+            myQuesNum: userInfoService.userInfo[0].myQuesNum
+        }];
+        console.log($scope.userInfo);
+    });
+
+    //根据缓存赋值
     if(!localStorage.length == 0) {
         $scope.userInfo = [{
             account: localStorage.account,
             nickname: localStorage.nickname,
             avatar: localStorage.avatar,
-            userSign: localStorage.sign
+            motto: localStorage.motto,
+            markedNum: localStorage.markedNum,
+            myAnswerNum: localStorage.myAnswerNum,
+            waitForAnswerNum: localStorage.waitForAnswerNum,
+            myFollowerNum: localStorage.myFollowerNum,
+            myQuesNum: localStorage.myQuesNum
         }];
         console.log($scope.userInfo);
-    }
+    };
 
-    //监听 service userRefreshed 方法的调用更新用户信息
-    $scope.$on('userRefreshed',function(){
-        $scope.userInfo = userInfoService.userInfo;
-        console.log($scope.userInfo);
-    })
+    //是否有新的未查看回答邀请
+    $scope.newAnswerRequest = function(){
+        if ($scope.userInfo[0].waitForAnswerNum == 0) {
+            return false;
+        }else {
+            return true;
+        }
+    };
+
+    //刷新个人主页信息
+    $scope.doRefresh = function(){
+
+    };
 })
 
 //圈子-推荐控制器
 .controller('circleCommendCtrl', function($scope, $state, $ionicModal, $http){
     console.log('圈子-推荐控制器');
-    var url = mainServer + 'remd/getQuestionAnswer';
-    var fetchData = function(){
+    var fetchData = function(tag){
+        var url = mainServer + 'remd/getQuestionAnswer';
+        $scope.noData = false;
         $http.post(url).success(function(data){
-            console.log(data)
+            if(tag == 'refresh'){
+                $scope.$broadcast('scroll.refreshComplete');
+            }
+            switch (data.resultCode) {
+                case 1000: {
+                    $scope.dataArray = data.result;
+                    break;
+                }
+                case 1001: {
+                    $scope.dataArray = [];
+                    console.log('没有数据');
+                    $scope.noData = true;
+                    break;
+                }
+                default: {
+                    $scope.dataArray = [];
+                    console.log("无数据");
+                    $scope.noData = true;
+                    break;
+                }
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
+            $scope.noData = true;
+            $scope.$broadcast('scroll.refreshComplete');
         })
     };
+
     fetchData();
+
+    $scope.doRefresh = function(){
+        fetchData('refresh');
+    }
 })
 
 //圈子-动态控制器
 .controller('circleCampaignCtrl', function($scope, $http){
     console.log('圈子-动态控制器');
 
-    var url = mainServer + "latest/trend?userId=28";
-    var fetchData = function(){
-        $http.post(url).success(function(data){
-            console.log(data);
-        }).error(function(error){
-            console.log(error)
-        })
+    var fetchData = function(tag){
+        $scope.unSign = false;
+        $scope.noData = false;
+        $scope.unWatch = false;
+
+        if (localStorage.length == 0){
+            console.log("还没有登录");
+            $scope.dataArray = [];
+            $scope.unSign = true;
+            $scope.$broadcast('scroll.refreshComplete');
+        }else {
+            var url = mainServer + "latest/trend?userId=" + localStorage.userId;
+            $http.post(url).success(function(data){
+                if(tag == 'refresh'){
+                    $scope.$broadcast('scroll.refreshComplete');
+                }
+                switch (data.resultCode) {
+                    case '1000': {
+                        $scope.dataArray = data.trends;
+                        console.log($scope.dataArray);
+                        break;
+                    }
+                    case '1001': {
+                        $scope.dataArray = [];
+                        console.log('关注的用户暂无内容');
+                        $scope.noData = true;
+                        break;
+                    }
+                    case '1002': {
+                        $scope.dataArray = [];
+                        console.log('当前用户暂未关注其他用户');
+                        $scope.unWatch = true;
+                        break;
+                    }
+                    default: {
+                        $scope.dataArray = [];
+                        console.log("无数据");
+                        $scope.noData = true;
+                        break;
+                    }
+                }
+            }).error(function(error){
+                console.log(error);
+                $scope.dataArray = [];
+                $scope.noData = true;
+                $scope.$broadcast('scroll.refreshComplete');
+            })
+        }
     };
+
     fetchData();
+
+    $scope.doRefresh = function(){
+        fetchData('refresh');
+    }
 })
 
 //圈子-最新控制器
 .controller('circleNewCtrl', function($scope, $http){
     console.log('圈子-最新控制器');
-    var url = mainServer + "latest/latestList";
-    var fetchData = function(){
+    var fetchData = function(tag){
+        $scope.noData = false;
+        var url = mainServer + "latest/latestList";
         $http.post(url).success(function(data){
-            console.log(data);
+            if(tag == 'refresh'){
+                $scope.$broadcast('scroll.refreshComplete');
+            }
+            switch (data.resultCode) {
+                case '1000': {
+                    $scope.dataArray = data.result;
+                    console.log($scope.dataArray);
+                    break;
+                }
+                case '1001': {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    $scope.noData = true;
+                    break;
+                }
+                default: {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    $scope.noData = true;
+                    break;
+                }
+            }
         }).error(function(error){
-            console.log(error)
+            $scope.dataArray = [];
+            console.log(error);
+            $scope.noData = true;
+            $scope.$broadcast('scroll.refreshComplete');
         })
     };
+
     fetchData();
+
+    $scope.doRefresh = function(){
+        fetchData("refresh");
+    }
 })
 
 //圈子-关注控制器
 .controller('circleRegardCtrl', function($scope, $timeout, $http){
     console.log('圈子-关注控制器');
-    var url = mainServer + "latest/myAttentionList?userId=28";
-    var fetchData = function(){
-        $http.post(url).success(function(data){
-            console.log(data);
-        }).error(function(error){
-            console.log(error)
-        })
+
+    var fetchData = function(tag){
+        //没有数据时候的提示
+        $scope.unSign = false;
+        $scope.unWatch = false;
+        $scope.noData = false;
+
+        //未登录
+        if (localStorage.length == 0){
+            $scope.dataArray = [];
+            console.log("没有登录");
+            $scope.unSign = true;
+            $scope.$broadcast('scroll.refreshComplete');
+        }else {
+            var url = mainServer + "latest/myAttentionList?userId=" + localStorage.userId;
+            $http.post(url).success(function(data){
+                if (tag == 'refresh'){
+                    $scope.$broadcast('scroll.refreshComplete');
+                }
+                switch (data.resultCode) {
+                    case '1000': {
+                        $scope.dataArray = data.result;
+                        console.log($scope.dataArray);
+                        break;
+                    }
+                    case '1001': {
+                        $scope.dataArray = [];
+                        console.log("没有数据");
+                        $scope.noData = true;
+                        break;
+                    }
+                    case '1002': {
+                        $scope.dataArray = [];
+                        console.log("没有关注的问题");
+                        $scope.unWatch = true;
+                        break;
+                    }
+                    default: {
+                        $scope.dataArray = [];
+                        console.log("没有数据");
+                        $scope.noData = true;
+                        break;
+                    }
+                }
+            }).error(function(error){
+                console.log(error);
+                $scope.dataArray = [];
+                console.log("没有数据");
+                $scope.noData = true;
+                $scope.$broadcast('scroll.refreshComplete');
+            })
+        }
     };
+
     fetchData();
 
     $scope.doRefresh = function(){
-        $timeout($scope.$broadcast('scroll.refreshComplete'), 2000);
+        fetchData('refresh');
     };
 
     $scope.loadMoreData = function(){
@@ -766,26 +963,57 @@ angular.module('starter.controllers', [])
 //个人主页-我的问题
 .controller('sectionHomepageQuestionCtrl', function($scope, modalScrollDelegate, $http){
 
-    var allUrl = mainServer + 'question/queryQuestion?userId=27';
-    var newUrl = mainServer + 'question/getUpdQuestion?userId=27';
-
-    $scope.dataArray = [];
+    $scope.avatar = localStorage.avatar;
 
     var fetchAllQuestion = function(){
+        var allUrl = mainServer + 'question/queryQuestion?userId=' + localStorage.userId;
         $http.post(allUrl).success(function(data){
-            console.log(data);
-            $scope.dataArray = data.result;
+            switch (data.resultCode) {
+                case '1000': {
+                    $scope.dataArray = data.result;
+                    console.log($scope.dataArray);
+                    break;
+                }
+                case '1001': {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+                default: {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
         });
     };
 
     var fetchNewAnswer = function(){
+        var newUrl = mainServer + 'question/getUpdQuestion?userId=' + localStorage.userId;
         $http.post(newUrl).success(function(data){
-            console.log(data);
-            $scope.dataArray = data.result;
+            switch (data.resultCode) {
+                case '1000': {
+                    $scope.dataArray = data.result;
+                    console.log($scope.dataArray);
+                    break;
+                }
+                case '1001': {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+                default: {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
         })
     };
 
@@ -827,12 +1055,30 @@ angular.module('starter.controllers', [])
 
 //个人主页 我的收藏
 .controller('sectionHomepageMarkCtrl', function($scope, $http){
-    var url = mainServer + 'collect/getCollect?userId=27';
+
     var fetchData = function() {
+        var url = mainServer + 'collect/getCollect?userId=' + localStorage.userId;
         $http.post(url).success(function(data){
-            console.log(data)
+            switch (data.resultCode) {
+                case '1000': {
+                    $scope.dataArray = data.result;
+                    console.log($scope.dataArray);
+                    break;
+                }
+                case '1001': {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+                default: {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
         })
     };
 
@@ -845,12 +1091,30 @@ angular.module('starter.controllers', [])
 
 //个人主页 我的回答
 .controller('sectionHomepageAnswerCtrl', function($scope, $http){
-    var url = mainServer + 'question/needAnswerQuestion?userId=27';
+
     var fetchData = function() {
+        var url = mainServer + 'question/queryInviteAnswers?userId=' + localStorage.userId;
         $http.post(url).success(function(data){
-            console.log(data)
+            switch (data.resultCode) {
+                case '1000': {
+                    $scope.dataArray = data.result;
+                    console.log($scope.dataArray);
+                    break;
+                }
+                case '1001': {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+                default: {
+                    $scope.dataArray = [];
+                    console.log("没有数据");
+                    break;
+                }
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
         })
     };
 
@@ -894,6 +1158,11 @@ angular.module('starter.controllers', [])
             }
         }
     }
+})
+
+//个人主页 我的回答
+.controller('sectionHomepageMyAnswerCtrl', function($scope){
+
 })
 
 //个人主页 编辑个人资料

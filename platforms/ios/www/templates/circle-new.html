@@ -1,5 +1,5 @@
 <!--圈子-最新-->
-<ion-view class="new">
+<ion-view class="new" ng-controller="circleNewCtrl">
 
 
     <!--<ion-nav-buttons side="left">-->
@@ -21,35 +21,38 @@
         </ion-refresher>
 
         <ion-list>
-            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+
+            <div class="no-data" ng-if="noData">
+                没有数据哟~
+            </div>
+
+            <div ng-repeat="data in dataArray">
                 <div class="new-list-cell" ng-click="openQuestionModal(i)">
                    <div class="avatar">
-                       <img src="img/max.png" alt="">
+                       <img src="{{data.fimg}}" alt="">
                    </div>
                     <div class="answer-num">
                         <i class="fa fa-comment-o" aria-hidden="true"></i>
                         10
                     </div>
                     <div class="question">
-                        以及之后专门写了篇文章“SVG图标颜色文字般继承与填充”讲CSS中使用SVG的fill属性实现一些效果。
+                        {{data.question}}
                     </div>
                     <div class="best-answer">
                         <div class="user-info">
-                            <span class="username">丘比龙</span>
-                            <span class="motto"> - 少壮不努力老大徒伤悲</span>
+                            <span class="username">{{data.hname}}</span>
+                            <span class="motto">  少壮不努力老大徒伤悲</span>
                             <div class="avatar">
-                                <img src="img/adam.jpg" alt="">
+                                <img src="{{data.himg}}" alt="">
                             </div>
                         </div>
                         <div class="answer-text">
-                            比方说，之前介绍“SVG Sprites技术”时候提到的fill属性，
-                            以及之后专门写了篇文章“SVG图标颜色文字般继承与填充”讲CSS中使用SVG的fill属性实现一些效果。
-                            还有很经典的在CSS中使用
+                            {{data.content}}
                         </div>
                     </div>
                     <div class="time">
                         <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        1小时前
+                        {{data.time}}
                     </div>
                 </div>
             </div>

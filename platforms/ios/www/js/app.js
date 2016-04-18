@@ -6,8 +6,11 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var mainServer = "http://192.168.3.136:8080/share/";
-var theLoginCookieUserName = "";
+////李重阳
+//var mainServer = "http://192.168.3.136:8080/share/";
+
+//谢词栋
+var mainServer = "http://192.168.3.101:8080/share/";
 
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'slick', 'starter.directives'])

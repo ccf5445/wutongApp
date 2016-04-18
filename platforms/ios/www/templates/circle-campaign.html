@@ -1,5 +1,5 @@
 <!--圈子-动态-->
-<ion-view class="campaign">
+<ion-view class="campaign" ng-controller="circleCampaignCtrl">
 
 
     <!--<ion-nav-buttons side="left">-->
@@ -21,14 +21,28 @@
         </ion-refresher>
 
         <ion-list>
-            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
+
+
+            <div class="not-sign" ng-if="unSign">
+                还没有登录哟~
+            </div>
+
+            <div class="no-data" ng-if="noData">
+                没有数据哟~
+            </div>
+
+            <div class="no-watch" ng-if="unWatch">
+                没有关注的用户哟~
+            </div>
+
+            <div ng-repeat="data in dataArray">
                 <div class="campaign-list-cell" ng-click="openQuestionModal(i)">
                     <div class="avatar">
                         <div class="img">
-                            <img src="img/max.png" alt="">
+                            <img src="{{data.head_img}}" alt="">
                         </div>
                         <div class="info">
-                            <span class="username">皮卡丘</span>
+                            <span class="username">{{data.nickname}}</span>
                             <span class="action">提出了问题</span>
                         </div>
                     </div>
@@ -37,15 +51,10 @@
                     <!--</div>-->
                     <div class="answer-action">
                         <div class="question">
-                            Ionic修改默认主题颜色
+                            {{data.question}}
                         </div>
                         <div class="answer">
-                            默认为dispay:inline-block；
-                            button-block有Padding。
-                            button-full是全屏的，它父级是没有padding的；
-                            按钮是有不同尺寸的 button-small button-large
-                            button-clear它会移除边框，使得文字脱颖而出。文字的颜色会替换背景色
-                            button-outline 添加一个透明的背景颜色；
+                            {{data.content}}
                         </div>
                     </div>
                 </div>
