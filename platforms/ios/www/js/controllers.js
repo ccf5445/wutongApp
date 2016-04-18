@@ -59,6 +59,20 @@ angular.module('starter.controllers', [])
 
     $scope.openQuizModal = function() {
         $scope.sectionQuizModal.show();
+        var editor = UM.getEditor('myEditor',{
+            toolbar:['image'],
+            //focus时自动清空初始化时的内容
+            autoClearinitialContent:true,
+            //关闭字数统计
+            wordCount:false,
+            //关闭elementPath
+            elementPathEnabled:false,
+            //默认的编辑区域高度
+            initialFrameHeight:300,
+            //是否允许自动变高
+            autoHeightEnabled:false
+            //更多其他参数，请参考umeditor.config.js中的配置项
+        });
     };
 
     $scope.closeQuizModal = function() {
