@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
     });
 
     $scope.openQuestionModal = function(id) {
-        $scope.selectedId = id;
+        $scope.questionId = id;
         $scope.sectionQuestionModal.show();
     };
 
@@ -49,7 +49,24 @@ angular.module('starter.controllers', [])
         $scope.sectionQuestionModal.hide();
     };
 
-    //* * * * * * * * * 添加问题
+    //* * * * * * * * * 答案详情
+    $ionicModal.fromTemplateUrl('templates/section-answer-detail.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.sectionAnswerModal = modal;
+    });
+
+    $scope.openAnswerDetailModal = function(id) {
+        $scope.answerId = id;
+        $scope.sectionAnswerModal.show();
+    };
+
+    $scope.closeAnswerDetailModal = function() {
+        $scope.sectionAnswerModal.hide();
+    };
+
+    //* * * * * * * * * 添加问题标题
     $ionicModal.fromTemplateUrl('templates/section-quiz.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -59,24 +76,40 @@ angular.module('starter.controllers', [])
 
     $scope.openQuizModal = function() {
         $scope.sectionQuizModal.show();
-        var editor = UM.getEditor('myEditor',{
-            toolbar:['image'],
-            //focus时自动清空初始化时的内容
-            autoClearinitialContent:true,
-            //关闭字数统计
-            wordCount:false,
-            //关闭elementPath
-            elementPathEnabled:false,
-            //默认的编辑区域高度
-            initialFrameHeight:300,
-            //是否允许自动变高
-            autoHeightEnabled:false
-            //更多其他参数，请参考umeditor.config.js中的配置项
-        });
+        //var editor = UM.getEditor('myEditor',{
+        //    toolbar:['image'],
+        //    //focus时自动清空初始化时的内容
+        //    autoClearinitialContent:true,
+        //    //关闭字数统计
+        //    wordCount:false,
+        //    //关闭elementPath
+        //    elementPathEnabled:false,
+        //    //默认的编辑区域高度
+        //    initialFrameHeight:300,
+        //    //是否允许自动变高
+        //    autoHeightEnabled:false
+        //    //更多其他参数，请参考umeditor.config.js中的配置项
+        //});
     };
 
     $scope.closeQuizModal = function() {
         $scope.sectionQuizModal.hide();
+    };
+
+    //* * * * * * * * * 添加问题描述
+    $ionicModal.fromTemplateUrl('templates/section-quiz-detail.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.sectionQuizDetailhModal = modal;
+    });
+
+    $scope.openQuizDetailModal = function() {
+        $scope.sectionQuizDetailhModal.show();
+    };
+
+    $scope.closeQuizDetailModal = function() {
+        $scope.sectionQuizDetailhModal.hide();
     };
 
     //* * * * * * * * * 搜索
@@ -141,6 +174,7 @@ angular.module('starter.controllers', [])
     $scope.closeFetchPsw_1Modal = function() {
         $scope.sectionfetchPsw_1.hide();
     };
+
     //输入验证码
     $ionicModal.fromTemplateUrl('templates/section-fetchPsw-2.html', {
         scope: $scope,
@@ -156,6 +190,7 @@ angular.module('starter.controllers', [])
     $scope.closeFetchPsw_2Modal = function() {
         $scope.sectionfetchPsw_2.hide();
     };
+
     //输入重置密码
     $ionicModal.fromTemplateUrl('templates/section-fetchPsw-3.html', {
         scope: $scope,
@@ -394,18 +429,21 @@ angular.module('starter.controllers', [])
 .controller('circleCommendCtrl', function($scope, $state, $ionicModal, $http){
     console.log('圈子-推荐控制器');
     var fetchData = function(tag){
+        $scope.loadingShow();
         var url = mainServer + 'remd/getQuestionAnswer';
         $scope.noData = false;
         $http.post(url).success(function(data){
+            $scope.loadingHide();
             if(tag == 'refresh'){
                 $scope.$broadcast('scroll.refreshComplete');
             }
             switch (data.resultCode) {
-                case 1000: {
-                    $scope.dataArray = data.result;
+                case '1000': {
+                    $scope.dataArray = data;
+                    console.log($scope.dataArray);
                     break;
                 }
-                case 1001: {
+                case '1001': {
                     $scope.dataArray = [];
                     console.log('没有数据');
                     $scope.noData = true;
@@ -419,6 +457,7 @@ angular.module('starter.controllers', [])
                 }
             }
         }).error(function(error){
+            $scope.loadingHide();
             console.log(error);
             $scope.dataArray = [];
             $scope.noData = true;
@@ -438,6 +477,8 @@ angular.module('starter.controllers', [])
     console.log('圈子-动态控制器');
 
     var fetchData = function(tag){
+        $scope.loadingShow();
+
         $scope.unSign = false;
         $scope.noData = false;
         $scope.unWatch = false;
@@ -446,10 +487,12 @@ angular.module('starter.controllers', [])
             console.log("还没有登录");
             $scope.dataArray = [];
             $scope.unSign = true;
+            $scope.loadingHide();
             $scope.$broadcast('scroll.refreshComplete');
         }else {
             var url = mainServer + "latest/trend?userId=" + localStorage.userId;
             $http.post(url).success(function(data){
+                $scope.loadingHide();
                 if(tag == 'refresh'){
                     $scope.$broadcast('scroll.refreshComplete');
                 }
@@ -479,6 +522,7 @@ angular.module('starter.controllers', [])
                     }
                 }
             }).error(function(error){
+                $scope.loadingHide();
                 console.log(error);
                 $scope.dataArray = [];
                 $scope.noData = true;
@@ -498,9 +542,11 @@ angular.module('starter.controllers', [])
 .controller('circleNewCtrl', function($scope, $http){
     console.log('圈子-最新控制器');
     var fetchData = function(tag){
+        $scope.loadingShow();
         $scope.noData = false;
         var url = mainServer + "latest/latestList";
         $http.post(url).success(function(data){
+            $scope.loadingHide();
             if(tag == 'refresh'){
                 $scope.$broadcast('scroll.refreshComplete');
             }
@@ -524,6 +570,7 @@ angular.module('starter.controllers', [])
                 }
             }
         }).error(function(error){
+            $scope.loadingHide();
             $scope.dataArray = [];
             console.log(error);
             $scope.noData = true;
@@ -543,6 +590,7 @@ angular.module('starter.controllers', [])
     console.log('圈子-关注控制器');
 
     var fetchData = function(tag){
+        $scope.loadingShow();
         //没有数据时候的提示
         $scope.unSign = false;
         $scope.unWatch = false;
@@ -550,6 +598,7 @@ angular.module('starter.controllers', [])
 
         //未登录
         if (localStorage.length == 0){
+            $scope.loadingHide();
             $scope.dataArray = [];
             console.log("没有登录");
             $scope.unSign = true;
@@ -557,6 +606,7 @@ angular.module('starter.controllers', [])
         }else {
             var url = mainServer + "latest/myAttentionList?userId=" + localStorage.userId;
             $http.post(url).success(function(data){
+                $scope.loadingHide();
                 if (tag == 'refresh'){
                     $scope.$broadcast('scroll.refreshComplete');
                 }
@@ -586,6 +636,7 @@ angular.module('starter.controllers', [])
                     }
                 }
             }).error(function(error){
+                $scope.loadingHide();
                 console.log(error);
                 $scope.dataArray = [];
                 console.log("没有数据");
@@ -609,12 +660,9 @@ angular.module('starter.controllers', [])
 //搜索圈子界面 控制器
 .controller('sectionSearchCtrl', function($scope, modalScrollDelegate, $http){
 
-    $scope.$on('modal.shown', function() {
-        if($scope.sectionSearchModal.isShown()){
-            $scope.isQuestion = true;
-            $scope.isUser = false;
-        }
-    });
+    $scope.clearContent = function(){
+        document.getElementById('circleSearchContent').value = "";
+    };
 
     var contentUrl = mainServer + 'search/searchContent?content=';
     var userUrl = mainServer + 'search/searchUser?content=';
@@ -623,9 +671,16 @@ angular.module('starter.controllers', [])
     var searchForContent = function(){
         var content = document.getElementById('circleSearchContent').value;
         $http.post(contentUrl + content).success(function(data){
-            console.log(data);
+            if (data.resultCode == "1001"){
+                $scope.dataArray = [];
+                console.log("没有数据");
+            }else {
+                $scope.dataArray = data;
+                console.log($scope.dataArray);
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
         })
     };
 
@@ -633,9 +688,16 @@ angular.module('starter.controllers', [])
     var searchForUser = function(){
         var content = document.getElementById('circleSearchContent').value;
         $http.post(userUrl + content).success(function(data){
-            console.log(data);
+            if (data.resultCode == "1001"){
+                $scope.dataArray = [];
+                console.log("没有数据");
+            }else {
+                $scope.dataArray = data.result;
+                console.log($scope.dataArray);
+            }
         }).error(function(error){
-            console.log(error)
+            console.log(error);
+            $scope.dataArray = [];
         })
     };
 
@@ -646,6 +708,14 @@ angular.module('starter.controllers', [])
             searchForUser();
         }
     };
+
+    $scope.$on('modal.shown', function() {
+        if($scope.sectionSearchModal.isShown()){
+            $scope.isQuestion = true;
+            $scope.isUser = false;
+            searchForContent();
+        }
+    });
 
     var toTop = function(){
         modalScrollDelegate.$getByHandle('searchModal').scrollTop();
@@ -676,15 +746,85 @@ angular.module('starter.controllers', [])
     };
 })
 
-//提问界面 控制器
+//提问界面标题 控制器
 .controller('sectionQuizCtrl', function($scope){
+    $scope.$on('modal.shown', function() {
+        if($scope.sectionQuizModal.isShown()){
+
+        }
+    });
+})
+
+//提问界面详情 控制器
+.controller('sectionQuizDetailCtrl', function($scope){
+    $scope.$on('modal.shown', function() {
+        if($scope.sectionQuizDetailhModal.isShown()){
+
+        }
+    });
 })
 
 //问题详情页面 控制器
-.controller('sectionQuestionCtrl', function($scope){
+.controller('sectionQuestionCtrl', function($scope, $http){
     $scope.detailMore  =false;
+
     $scope.showMoreDetail = function(){
         $scope.detailMore = !$scope.detailMore;
+    };
+
+
+    $scope.$on('modal.shown', function() {
+        if($scope.sectionQuestionModal.isShown()){
+            var url = mainServer + "question/answerQuestion?userId=" + localStorage.userId + "&questionId=" + $scope.questionId;
+            $http.post(url).success(function(data){
+                $scope.dataArray = data;
+                try{
+                    $scope.answerNum = data.result.length;
+                }catch (e){
+                    $scope.answerNum = 0;
+                }
+                console.log($scope.dataArray);
+            }).error(function(error){
+                console.log(error);
+                console.log("没有数据");
+            })
+        }
+    });
+
+})
+
+//答案详情页面 控制器
+.controller('sectionAnswerDetailCtrl',function($scope, $http){
+    $scope.$on('modal.shown', function() {
+        if($scope.sectionAnswerModal.isShown()){
+            $scope.isVoted = false;
+            var url = mainServer + "question/getComment?userId="+ localStorage.userId + "&answerId="+ $scope.answerId;
+            $http.post(url).success(function(data){
+                console.log(data);
+                try{
+                    $scope.answerNum = data.result.length;
+                    for (i=0; i<data.result.length; i++){
+                        data.result[i].more = false;
+                    }
+                }catch (e){
+                    $scope.answerNum = 0;
+                }
+                $scope.dataArray = data;
+            }).error(function(error){
+                console.log(error);
+            })
+        }
+    });
+
+    $scope.vote = function(){
+        $scope.isVoted = true;
+        $scope.dataArray.voteNum = ++$scope.dataArray.voteNum;
+    };
+
+    $scope.showMore = function(i) {
+        //console.log(i);
+        //console.log($scope.dataArray.result);
+        $scope.dataArray.result[i].more = !$scope.dataArray.result[i].more;
     }
 })
 
@@ -966,28 +1106,33 @@ angular.module('starter.controllers', [])
     $scope.avatar = localStorage.avatar;
 
     var fetchAllQuestion = function(){
+        $scope.noData = false;
         var allUrl = mainServer + 'question/queryQuestion?userId=' + localStorage.userId;
         $http.post(allUrl).success(function(data){
             switch (data.resultCode) {
                 case '1000': {
                     $scope.dataArray = data.result;
                     console.log($scope.dataArray);
+                    $scope.noData = false;
                     break;
                 }
                 case '1001': {
                     $scope.dataArray = [];
                     console.log("没有数据");
+                    $scope.noData = true;
                     break;
                 }
                 default: {
                     $scope.dataArray = [];
                     console.log("没有数据");
+                    $scope.noData = true;
                     break;
                 }
             }
         }).error(function(error){
             console.log(error);
             $scope.dataArray = [];
+            $scope.noData = true;
         });
     };
 
@@ -998,22 +1143,26 @@ angular.module('starter.controllers', [])
                 case '1000': {
                     $scope.dataArray = data.result;
                     console.log($scope.dataArray);
+                    $scope.noData = false;
                     break;
                 }
                 case '1001': {
                     $scope.dataArray = [];
                     console.log("没有数据");
+                    $scope.noData = true;
                     break;
                 }
                 default: {
                     $scope.dataArray = [];
                     console.log("没有数据");
+                    $scope.noData = true;
                     break;
                 }
             }
         }).error(function(error){
             console.log(error);
             $scope.dataArray = [];
+            $scope.noData = true;
         })
     };
 
@@ -1057,8 +1206,10 @@ angular.module('starter.controllers', [])
 .controller('sectionHomepageMarkCtrl', function($scope, $http){
 
     var fetchData = function() {
+        $scope.loadingShow();
         var url = mainServer + 'collect/getCollect?userId=' + localStorage.userId;
         $http.post(url).success(function(data){
+            $scope.loadingHide();
             switch (data.resultCode) {
                 case '1000': {
                     $scope.dataArray = data.result;
@@ -1077,6 +1228,7 @@ angular.module('starter.controllers', [])
                 }
             }
         }).error(function(error){
+            $scope.loadingHide();
             console.log(error);
             $scope.dataArray = [];
         })
@@ -1093,8 +1245,10 @@ angular.module('starter.controllers', [])
 .controller('sectionHomepageAnswerCtrl', function($scope, $http){
 
     var fetchData = function() {
+        $scope.loadingShow();
         var url = mainServer + 'question/queryInviteAnswers?userId=' + localStorage.userId;
         $http.post(url).success(function(data){
+            $scope.loadingHide();
             switch (data.resultCode) {
                 case '1000': {
                     $scope.dataArray = data.result;
@@ -1113,6 +1267,7 @@ angular.module('starter.controllers', [])
                 }
             }
         }).error(function(error){
+            $scope.loadingHide();
             console.log(error);
             $scope.dataArray = [];
         })
@@ -1167,6 +1322,13 @@ angular.module('starter.controllers', [])
 
 //个人主页 编辑个人资料
 .controller('sectionHomepageEditInfoCtrl', function($scope){
+
+    $scope.$on('modal.shown', function() {
+        if($scope.sectionEditInfo.isShown()){
+
+        }
+    });
+
 
 });
 

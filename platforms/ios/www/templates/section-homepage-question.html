@@ -13,7 +13,10 @@
     <ion-content class="content" delegate-handle="homepageQuestion">
         <ion-list>
 
-            <!--所有问题-->
+            <div class="no-data" ng-if="noData">
+                没有数据哟~
+            </div>
+
             <div ng-repeat="data in dataArray">
                 <div class="question-cell">
                     <div class="img">

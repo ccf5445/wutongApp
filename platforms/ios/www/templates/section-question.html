@@ -1,7 +1,7 @@
 <ion-modal-view ng-controller="sectionQuestionCtrl" class="section-question">
     <ion-header-bar>
         <button class="button button-clear ion-android-close" ng-click="closeQuestionModal()"></button>
-        <h1 class="title">问题详情{{selectedId}}</h1>
+        <h1 class="title">{{answerNum}}个回答</h1>
         <button class="button button-clear ion-ios-more" ></button>
     </ion-header-bar>
 
@@ -11,30 +11,30 @@
 
             <div class="title">
                 <div class="img">
-                    <img src="img/max.png" alt="">
+                    <img src="{{dataArray.resultQuestion.head_img}}" alt="">
                 </div>
-                <div class="text">金亚科技上演惊天逆转 下调估值基金净值获提振</div>
+                <div class="text">{{dataArray.resultQuestion.question}}</div>
             </div>
 
             <div class="detail" ng-click="showMoreDetail()" ng-if="!detailMore">
                 <div class="text">
-                    金亚科技昨天上演惊天大逆转！
-                    因为涉嫌违规被证监会立案调查而有暂停上市风险，
-                    此前被多只基金预估可能多达十多个跌停板的金亚科技
+                    {{dataArray.resultQuestion.describe}}
                 </div>
                 <i class="more ion-ios-arrow-down"></i>
             </div>
 
             <div class="detail-more" ng-if="detailMore" ng-click="showMoreDetail()">
-            　　从2015年6月初开始，金亚科技就公告称因公司及实际控制人周旭辉涉嫌违反证券法律法规，根据《中华人民共和国证券法》的有关规定，被中国证监会立案调查，公司也存在暂停上市的风险。此后，持有金亚科技的多家基金公司，纷纷发布公告大幅下调金亚科技的估值，十多家基金公司最乐观的估值也仅有8.8元，最悲观的基金公司估值只有5.14元。
-            　　从昨天金亚科技的市场表现看，早盘大幅低开后被迅猛拉升，三四分钟后就被拉升至涨停，在剧烈震荡完成筹码交换后，10点左右被封死涨停，全天成交额高达31.54亿元。
-            　　按照基金持有停牌股的通常做法，在股票复牌并体现出活跃的市场交易特征后，将恢复为采用当日收盘价格进行估值，金亚科技涨停收盘后将按照昨日收盘价格予以估值，这也使得此前大幅低估的基金净值得以提升，尤其是持有金亚科技市值占基金净值比较高的基金，以广发聚优灵活基金为例，此前其对金亚科技的估值为8.68元，而昨日的收盘价为22.42元，由于其持有金亚科技市值占基金净值比高达6.21%，因此对该基金的净值提升明显。
+                {{dataArray.resultQuestion.describe}}
+            </div>
+
+            <div class="topics">
+                <span ng-repeat="topic in dataArray.resultArt" class="topic">{{topic.art_name}}</span>
             </div>
 
             <div class="info">
                 <button>关注</button>
                 <div class="info-detail">
-                    230关注   50回答
+                    {{dataArray.resultAttention}}关注   {{answerNum}}回答
                 </div>
             </div>
 
@@ -46,23 +46,28 @@
         </div>
 
         <div class="answer">
-            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]">
-                <div class="answer-cell" ng-click="">
-                    <i class="vote">3.5K</i>
+            <div ng-repeat="data in dataArray.result">
+                <div class="answer-cell" ng-click="openAnswerDetailModal(data.id)">
+
                     <div class="avatar">
-                        <img src="img/max.png" alt="">
+                        <img src="{{data.head_img}}" alt="">
+                    </div>
+
+                    <div class="vote">
+                        {{data.agree}}
                     </div>
 
                     <div class="text">
                         <div class="username">
-                            王小猪
+                            {{data.nickname}}
                         </div>
-                        <div class="answer-general">
-                            平常省下的零花钱，还有打工啊。 平常上学的时候当助教
-                            ，判作业，食堂打工什么的一学年能有4-5000美金~~我在美国，最低收入每小时也9快多,
-                            一礼拜20小时，一个月80*$9=$720但是一般都是600左右。一学期8个多月$600*8.5=5100 :)
-                            你真正走出这一步以后，就发现，其实没有那么难。
+                        <div class="motto">
+                            {{data.sign}}
                         </div>
+                    </div>
+
+                    <div class="answer-general">
+                        {{data.content}}
                     </div>
                 </div>
             </div>

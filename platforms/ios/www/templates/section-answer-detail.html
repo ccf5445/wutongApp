@@ -1,0 +1,58 @@
+<ion-modal-view class="section-answer-detail" ng-controller="sectionAnswerDetailCtrl">
+
+    <ion-header-bar>
+        <button class="button button-clear" ng-click="closeAnswerDetailModal()">close</button>
+        <h1 class="title">答案详情页</h1>
+    </ion-header-bar>
+
+    <ion-content class="content">
+        <div class="header">
+            <div class="avatar">
+                <img src={{dataArray.resultAnswer.head_img}} alt="">
+            </div>
+            <div class="text">
+                <div class="name">{{dataArray.resultAnswer.nickname}}</div>
+                <div class="motto">{{dataArray.resultAnswer.sign}}</div>
+            </div>
+            <div class="vote" ng-class="{'voted': isVoted}" ng-click="vote()">
+                同意 {{dataArray.resultAnswer.agree}}
+            </div>
+        </div>
+
+        <div class="answer-content">
+            {{dataArray.resultAnswer.content}}
+        </div>
+
+        <div class="answer-comment">
+            <div class="title">
+                <span class="name">评论</span>
+                <span class="number">{{answerNum}}条评论</span>
+            </div>
+            <div class="my-hr"></div>
+            <div class="comment-cell" ng-repeat="data in dataArray.result">
+                <div class="user">
+                    <div class="avatar">
+                        <img src={{data.head_img}} alt="">
+                    </div>
+                    <div class="text">
+                        <div class="name">{{data.nickname}}</div>
+                        <div class="time">2016年6月20日</div>
+                    </div>
+                </div>
+                <div class="comment-content" ng-if=!data.more>
+                    {{data.content}}
+                    <div class="open" ng-click="showMore($index)">
+                        展开
+                    </div>
+                </div>
+                <div class="comment-content-more" ng-if=data.more>
+                    {{data.content}}
+                    <div class="close" ng-click="showMore($index)">
+                        收起
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+
+</ion-modal-view>

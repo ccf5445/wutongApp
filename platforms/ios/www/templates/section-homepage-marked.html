@@ -10,16 +10,15 @@
             <div ng-repeat="data in dataArray">
                 <div class="marked-cell">
                     <div class="img">
-                        <img src="img/ionic.png" alt="">
+                        <img src="{{data.img}}" alt="">
                     </div>
                     <div class="text">
                         <div class="title">
-                            {{}}
+                            {{data.collect_titel}}
                         </div>
-                        <div class="detail">
-                            Editas和Intellia是美国基因编辑领域的两家龙头企业。
-                            尽管创立至今只有两年多时间，Editas和Intellia都吸引了投资者的关注。
-                        </div>
+                        <!--<div class="detail">-->
+                            <!--{{data.}}-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>

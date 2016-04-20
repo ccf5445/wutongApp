@@ -1,17 +1,21 @@
 <ion-modal-view class="section-quiz" ng-controller="sectionQuizCtrl">
-        <div class="quiz-bar">
-            <button class="ion-android-close button-clear my-close" ng-click="closeQuizModal()"></button>
-            <input class="quiz-content" type="text" placeholder="  添加问题">
-            <button class="button-clear next-step" ng-click="">下一步</button>
-            <div class="my-hr"></div>
-        </div>
+    <ion-header-bar>
+        <button class="button button-clear" ng-click="closeQuizModal()">返回</button>
+        <h1 class="title">提问</h1>
+        <button class="button button-clear" ng-click="openQuizDetailModal()">下一步</button>
+    </ion-header-bar>
 
-    <ion-content class="content">
+    <textarea placeholder="请输入问题标题" class="question-title" draggable="false" maxlength="50">
+    </textarea>
 
-            <script type="text/plain" id="myEditor" style="width:300px;height:240px;">
-            <p>这里我可以写一些输入提示</p>
-            </script>
+    <!--<ion-content class="content">-->
 
-    </ion-content>
+            <!--&lt;!&ndash;<script type="text/plain" id="myEditor" style="width:300px;height:240px;">&ndash;&gt;-->
+            <!--&lt;!&ndash;<p>这里我可以写一些输入提示</p>&ndash;&gt;-->
+            <!--&lt;!&ndash;</script>&ndash;&gt;-->
+
+        <!---->
+
+    <!--</ion-content>-->
 
 </ion-modal-view>

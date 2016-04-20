@@ -27,7 +27,7 @@
             </div>
 
             <div ng-repeat="data in dataArray">
-                <div class="new-list-cell" ng-click="openQuestionModal(i)">
+                <div class="new-list-cell" ng-click="openQuestionModal(data.id)">
                    <div class="avatar">
                        <img src="{{data.fimg}}" alt="">
                    </div>
@@ -41,7 +41,7 @@
                     <div class="best-answer">
                         <div class="user-info">
                             <span class="username">{{data.hname}}</span>
-                            <span class="motto">  少壮不努力老大徒伤悲</span>
+                            <span class="motto">  {{data.hsign}}</span>
                             <div class="avatar">
                                 <img src="{{data.himg}}" alt="">
                             </div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="time">
                         <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        {{data.time}}
+                        {{data.ago}}
                     </div>
                 </div>
             </div>

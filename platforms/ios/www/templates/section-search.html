@@ -2,7 +2,7 @@
     <ion-header-bar>
         <button class="button button-clear" ng-click="closeSearchModal()">返回</button>
         <input id="circleSearchContent" type="text" class="search-content" ng-keyup="searchResult(isQuestion)">
-        <button class="button button-clear" ng-click="">提问</button>
+        <button class="button button-clear" ng-click="clearContent()">清空</button>
     </ion-header-bar>
 
     <div class="selection">
@@ -13,12 +13,12 @@
     <ion-content class="content" delegate-handle="searchModal">
         <!--搜索 问答的内容-->
         <div  ng-if=isQuestion class="question-content">
-            <div ng-repeat="i in [1,2,3]">
+            <div ng-if=dataArray.article>
                 <div class="topic">
                     <div class="img">
-                        <img src="img/ionic.png" alt="">
+                        <img src="{{dataArray.article.head_img}}" alt="">
                     </div>
-                    <span class="topic-text">新三板</span>
+                    <span class="topic-text">{{dataArray.article.art_name}}</span>
                 <span class="lead">
                     进入话题
                     <i class="icon ion-chevron-right icon-accessory"></i>
@@ -26,24 +26,24 @@
                 </div>
             </div>
 
-            <div ng-repeat="i in [1,2,3,4,5,6,7,8,9]">
+            <div ng-repeat="data in dataArray.ques">
                 <div class="question">
-                    <div class="title">新三板的前世今生</div>
-                    <div class="answer">话说，如果高效率的搜索、获取想要的信息，也是一门技能。也需要长时间的摸索呀</div>
+                    <div class="title">{{data.question}}</div>
+                    <div class="answer">{{data.describe}}</div>
                 </div>
             </div>
         </div>
 
 
         <!--搜索 用户内容-->
-        <div class="list-user" ng-if=isUser ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+        <div class="list-user" ng-if=isUser ng-repeat="data in dataArray">
             <div class="user">
                 <div class="avatar">
-                    <img src="img/ben.png" alt="">
+                    <img src="{{data.head_img}}" alt="">
                 </div>
                 <div class="text">
-                    <div class="name">佐助</div>
-                    <div class="motto">原来一生的奔波只是双脚的距离</div>
+                    <div class="name">{{data.nickname}}</div>
+                    <div class="motto">{{data.sign}}</div>
                 </div>
             </div>
         </div>
